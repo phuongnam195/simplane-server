@@ -31,6 +31,7 @@ public class ResponseHandle implements ResponseBodyAdvice<Object> {
                                   @NonNull Class<? extends HttpMessageConverter<?>> aClass, @NonNull ServerHttpRequest serverHttpRequest,
                                   @NonNull ServerHttpResponse serverHttpResponse) {
         if (data instanceof ObjectResponseWrapper) return data;
+        if (data instanceof String && ((String) data).contains("openapi")) return data;
         return ObjectResponseWrapper.builder().status(1).data(data).build();
     }
 }

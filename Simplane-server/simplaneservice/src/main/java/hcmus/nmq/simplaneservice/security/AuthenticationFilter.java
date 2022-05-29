@@ -37,10 +37,10 @@ public class AuthenticationFilter extends GenericFilterBean {
 
         System.out.println("[Request] " + httpRequest.getRemoteAddr() + " - " + httpRequest.getMethod() + " - " + httpRequest.getRequestURI());
 
-        Optional<String> token = Optional.ofNullable(httpRequest.getHeader(Constants.AUTHORIZATION));
+//        Optional<String> token = Optional.ofNullable(httpRequest.getHeader(Constants.AUTHORIZATION));
 
         try {
-            processHeaderAuthentication(token);
+//            processHeaderAuthentication(token);
             filterChain.doFilter(servletRequest, servletResponse);
         } catch (InternalAuthenticationServiceException internalAuthenticationServiceException) {
             SecurityContextHolder.clearContext();

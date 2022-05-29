@@ -1,20 +1,28 @@
 package hcmus.nmq.simplaneservice.configs;
 
 import hcmus.nmq.simplaneservice.handler.RestTemplateHandler;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.servers.Server;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.ssl.TrustStrategy;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+
 
 import javax.net.ssl.SSLContext;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 9:29 PM 5/26/2022
@@ -45,6 +53,22 @@ public class ProjectConfig {
         restTemplate.setErrorHandler(new RestTemplateHandler());
 
         return restTemplate;
+    }
 
+    @Bean
+    public OpenAPI springShopOpenAPI() {
+        List<Server> servers = new ArrayList<>();
+
+        Server server = new Server();
+        server.setUrl("http://localhost:8282/simplane-service");
+        server.setDescription("Swagger");
+
+        servers.add(server);
+
+        return new OpenAPI()
+                .info(new Info().title("Simplane Service Swagger")
+                        .description("Simplane Service Swagger UI")
+                        .version("1.0"))
+                .servers(servers);
     }
 }
