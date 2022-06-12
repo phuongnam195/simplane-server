@@ -1,9 +1,7 @@
 package hcmus.nmq.simplaneservice.services.impls;
 
-import hcmus.nmq.simplaneservice.repositories.IAirportRepository;
-import hcmus.nmq.simplaneservice.repositories.ISequenceNumberRepository;
-import hcmus.nmq.simplaneservice.repositories.ISequenceNumberRepositoryCustom;
-import hcmus.nmq.simplaneservice.repositories.IUserRepository;
+import hcmus.nmq.simplaneservice.repositories.*;
+import hcmus.nmq.simplaneservice.services.IFlightAttrService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -42,4 +40,14 @@ public abstract class BaseService {
 //    @Autowired
 //    protected ISequenceNumberRepositoryCustom sequenceNumberRepositoryCustom;
 
+    @Autowired
+    protected IFlightRepository flightRepository;
+
+    @Autowired
+    protected IFlightAttrRepository flightAttrRepository;
+
+
+    //Service
+    @Autowired
+    protected IFlightAttrService flightAttrService;
 }

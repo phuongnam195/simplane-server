@@ -20,10 +20,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(Constants.AIRPORT_SERVICE_URL)
 @Tag(name = "Airport", description = "Airport API")
 public class AirportAPI extends BaseAPI {
-    @RequiredHeaderToken
+
     @Operation(summary = "Chi tiết sân bay bằng code")
-    @GetMapping(value = "/{code}")
-    public Airport getAirportByCode(@PathVariable(value = "code") String code) {
+    @GetMapping(value = "/")
+    public Airport getAirportByCode(@RequestParam(value = "code") String code) {
         Airport airport = airportRepository.findByCode(code);
         if(airport == null){
             throw new SimplaneServiceException("Không tồn tại sân bay!");
@@ -36,6 +36,7 @@ public class AirportAPI extends BaseAPI {
     @PostMapping
     public AirportDTO createAirport(@RequestBody AirportDTO airport) {
         validateCreate(airport);
+        isAdmin();
         String id = airportService.saveAirport(airport);
         AirportDTO airportDTO = AirportDTO.builder()
                 .name(airport.getName())
@@ -46,8 +47,9 @@ public class AirportAPI extends BaseAPI {
 
     @RequiredHeaderToken
     @Operation(summary = "Xóa sân bay bằng code")
-    @DeleteMapping(value = "/{code}")
-    public void deleteAirportByCode(@PathVariable(value = "code") String code){
+    @DeleteMapping(value = "/")
+    public void deleteAirportByCode(@RequestParam(value = "code") String code){
+        isAdmin();
         Airport airport = airportRepository.findByCode(code);
         airportRepository.delete(airport);
     }

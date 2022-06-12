@@ -8,7 +8,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
- * 10:32 AM 4/17/2022
+ * 8:29 PM 6/12/2022
  * LeHongQuan
  */
 
@@ -16,13 +16,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Document(collection = "user")
-public class User {
+@Document(collection = "passenger")
+public class Passenger {
     @Id
     private String id;
-    private String username;
-    private String password;
-    private String fullname;
-    private boolean isVerified;
-    private boolean isAdmin;
+    private String firstName;
+    private String lastName;
+    private String identityNumber;
+    private String email;
+    private String phoneNumber;
 }

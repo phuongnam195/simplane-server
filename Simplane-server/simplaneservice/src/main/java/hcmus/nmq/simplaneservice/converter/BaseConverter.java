@@ -1,34 +1,21 @@
-package hcmus.nmq.simplaneservice.api;
+package hcmus.nmq.simplaneservice.converter;
 
-import hcmus.nmq.entities.User;
-import hcmus.nmq.simplaneservice.converter.AirportConverter;
-import hcmus.nmq.simplaneservice.converter.FlightConverter;
-import hcmus.nmq.simplaneservice.handler.SimplaneServiceException;
-import hcmus.nmq.simplaneservice.jwt.JwtTokenProvider;
 import hcmus.nmq.simplaneservice.repositories.IAirportRepository;
 import hcmus.nmq.simplaneservice.repositories.IFlightRepository;
 import hcmus.nmq.simplaneservice.repositories.ISequenceNumberRepository;
 import hcmus.nmq.simplaneservice.repositories.IUserRepository;
 import hcmus.nmq.simplaneservice.services.IAirportService;
 import hcmus.nmq.simplaneservice.services.IFlightService;
-import hcmus.nmq.utils.Extensions;
-import lombok.experimental.ExtensionMethod;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.logging.Logger;
-
 /**
- * 1:39 PM 4/17/2022
+ * 10:24 PM 6/12/2022
  * LeHongQuan
  */
 
-@ExtensionMethod(Extensions.class)
-public abstract class BaseAPI {
-    protected static final Logger logger = Logger.getLogger(BaseAPI.class.getName());
+public abstract class BaseConverter {
 
     @Autowired
     private RestTemplate restTemplate;
@@ -39,6 +26,7 @@ public abstract class BaseAPI {
 
     @Autowired
     protected IAirportRepository airportRepository;
+
 
     //service
     @Autowired
@@ -57,19 +45,6 @@ public abstract class BaseAPI {
     @Autowired
     protected IFlightService flightService;
 
-    //Converter
-    @Autowired
-    protected FlightConverter flightConverter;
-
     @Autowired
     protected AirportConverter airportConverter;
-
-    protected void isAdmin() {
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        User user = (User) securityContext.getAuthentication().getPrincipal();
-        if (!user.isAdmin()) {
-            throw new SimplaneServiceException("Không đủ quyền! Vui lòng kiểm tra lại!");
-        }
-    }
-
 }

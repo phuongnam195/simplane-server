@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * 11:31 AM 5/28/2022
@@ -19,10 +19,10 @@ import java.math.BigDecimal;
 public class Ticket {
     @Id
     private String id;
-    private String enName;
-    private String viName;
-    private boolean canChange;
-    private BigDecimal changeFee;
-    private boolean canReturn;
-    private BigDecimal returnFee;
+    private String code;
+    private Date bookTime;
+    private String idTicketClass;
+    private String idPassenger;
+    private String idUser;
+    private String idFlight;
 }

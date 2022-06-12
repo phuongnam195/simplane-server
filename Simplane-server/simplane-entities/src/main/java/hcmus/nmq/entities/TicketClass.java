@@ -7,8 +7,10 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+
+
 /**
- * 10:32 AM 4/17/2022
+ * 8:30 PM 6/12/2022
  * LeHongQuan
  */
 
@@ -16,13 +18,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Document(collection = "user")
-public class User {
+@Document(collection = "ticket_class")
+public class TicketClass {
     @Id
     private String id;
-    private String username;
-    private String password;
-    private String fullname;
-    private boolean isVerified;
-    private boolean isAdmin;
+    private String name;
+    private String viName;
+    private String enName;
+    private Boolean canChange;
+    private Double changeFee;
+    private Boolean canReturn;
+    private Double returnFee;
 }

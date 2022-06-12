@@ -27,6 +27,12 @@
             <artifactId>springdoc-openapi-ui</artifactId>
             <version>1.5.13</version>
         </dependency>
+        <dependency>
+            <groupId>hcmus.nmq</groupId>
+            <artifactId>simplane-entities</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
 </project>

@@ -24,6 +24,8 @@ public class UserDTO {
     private String fullname;
     @JsonProperty("accessToken")
     private String accessToken;
-    @JsonProperty("role")
-    private String role;
+    @JsonProperty("isVerified")
+    private Boolean isVerified;
+    @JsonProperty("idAdmin")
+    private Boolean isAdmin;
 }

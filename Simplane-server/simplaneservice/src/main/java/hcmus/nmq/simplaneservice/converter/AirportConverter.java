@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @ExtensionMethod(Extensions.class)
 @Component
 public class AirportConverter {
-    public AirportDTO toOutputDTO(Airport airport){
+    public AirportDTO toDTO(Airport airport){
         return AirportDTO.builder()
                 .code(airport.getCode())
                 .address(airport.getAddress())

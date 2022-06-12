@@ -35,9 +35,8 @@ public class ExternalServiceAuthenticator implements IExternalServiceAuthenticat
         if (user == null) {
             throw new SimplaneServiceException("Token không hợp lệ");
         }
-        String role = user.getRole();
-        authenticationWithToken = new AuthenticationWithToken(user, null,
-                AuthorityUtils.commaSeparatedStringToAuthorityList(role));
+
+        authenticationWithToken = new AuthenticationWithToken(user, null, null);
         return authenticationWithToken;
     }
 }

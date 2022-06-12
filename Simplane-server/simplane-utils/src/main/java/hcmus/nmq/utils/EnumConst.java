@@ -6,8 +6,9 @@ package hcmus.nmq.utils;
  */
 
 public class EnumConst {
-    public enum RoleUserEnum {
-        USER,
-        MANAGER
+    public enum TypeAttrFlight {
+        SEAT,
+        BOOK
     }
+
 }

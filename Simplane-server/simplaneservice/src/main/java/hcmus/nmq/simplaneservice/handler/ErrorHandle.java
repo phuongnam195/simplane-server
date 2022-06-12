@@ -28,12 +28,12 @@ public class ErrorHandle extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = {SimplaneServiceException.class})
     protected ObjectResponseWrapper handleResponseStatusException(SimplaneServiceException e) {
         ObjectResponseWrapper.builder().build();
-        return ObjectResponseWrapper.builder().status(0).message(e.getReason()).data(e.getData()).build();
+        return ObjectResponseWrapper.builder().statusCode(0).message(e.getReason()).data(e.getData()).build();
     }
 
     @ExceptionHandler(value = {ConstraintViolationException.class})
     protected ObjectResponseWrapper handleConstraintViolationException(ConstraintViolationException e) {
-        return ObjectResponseWrapper.builder().status(0).message(e.getMessage()).build();
+        return ObjectResponseWrapper.builder().statusCode(0).message(e.getMessage()).build();
     }
 
     @SuppressWarnings("NullableProblems")
@@ -43,7 +43,7 @@ public class ErrorHandle extends ResponseEntityExceptionHandler {
                                                                   @NonNull HttpStatus status, @NonNull WebRequest request) {
         final List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
         return ResponseEntity.badRequest().body(ObjectResponseWrapper.builder()
-                .status(0)
+                .statusCode(0)
                 .message(fieldErrors.get(0).getDefaultMessage())
                 .build());
     }
