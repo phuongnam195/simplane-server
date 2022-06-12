@@ -44,7 +44,7 @@ public class AuthAPI extends BaseAPI {
         Map<String,Object> map = new HashMap<>();
         map.put("token",token);
         return ObjectResponseWrapper.builder()
-                .status(1)
+                .status(200)
                 .message("Đăng nhập thành công")
                 .data(map)
                 .build();

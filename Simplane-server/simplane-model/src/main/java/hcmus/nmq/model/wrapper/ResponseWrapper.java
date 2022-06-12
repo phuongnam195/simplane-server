@@ -17,7 +17,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 public class ResponseWrapper <T>{
-    protected int status;
+    protected int statusCode;
 
     protected String message;
 

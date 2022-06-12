@@ -16,13 +16,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDTO {
-    @JsonProperty("user_name")
+    @JsonProperty("username")
     private String username;
-    @JsonProperty("pass_word")
+    @JsonProperty("password")
     private String password;
-    @JsonProperty("full_name")
+    @JsonProperty("fullname")
     private String fullname;
-    @JsonProperty("access_token")
+    @JsonProperty("accessToken")
     private String accessToken;
     @JsonProperty("role")
     private String role;
