@@ -4,6 +4,8 @@ import hcmus.nmq.entities.Airport;
 import hcmus.nmq.entities.Flight;
 import hcmus.nmq.entities.FlightAttribute;
 import hcmus.nmq.model.profile.FlightProfile;
+import hcmus.nmq.model.search.ParameterSearchFlight;
+import hcmus.nmq.model.wrapper.ListWrapper;
 import hcmus.nmq.simplaneservice.services.IFlightAttrService;
 import hcmus.nmq.simplaneservice.services.IFlightService;
 import hcmus.nmq.simplaneservice.until.FlightUtils;
@@ -12,6 +14,7 @@ import hcmus.nmq.utils.Extensions;
 import lombok.experimental.ExtensionMethod;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -82,12 +85,26 @@ public class FlightService extends BaseService implements IFlightService {
         return flightProfile;
     }
 
+    @Override
+    public ListWrapper<FlightProfile> searchFlightProfiles(ParameterSearchFlight parameterSearchFlight) {
+        ListWrapper<Flight> wrapper = flightRepository.searchProduct(parameterSearchFlight);
+        List<Flight> flights = new ArrayList<>(wrapper.getData());
+        List<FlightProfile> flightProfiles = new ArrayList<>();
+        flights.forEach(flight -> {
+            flightProfiles.add(buildFlightProfile(flight));
+        });
+        return ListWrapper.<FlightProfile>builder()
+                .currentPage(wrapper.getCurrentPage())
+                .totalPage(wrapper.getTotalPage())
+                .total(wrapper.getTotal())
+                .data(flightProfiles)
+                .build();
+    }
+
     public FlightProfile buildFlightProfile(Flight flight) {
         FlightProfile flightProfile = new FlightProfile();
         String id = flight.getId();
         flightProfile.setId(flight.getId());
-//        flightProfile.setBookedAmount(flight.getBookAmount());
-//        flightProfile.setSeatAmount(flight.getSeatAmount());
 
         flightProfile.setCode(flight.getCode());
         flightProfile.setDateTime(flight.getDateTime());

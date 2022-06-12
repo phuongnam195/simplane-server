@@ -1,5 +1,6 @@
 package hcmus.nmq.model.dtos;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,6 +24,7 @@ public class FlightDTO {
     private String code;
     private AirportDTO fromAirport;
     private AirportDTO toAirport;
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
     private Date dateTime;
     private Double duration;
     private Map<String,Double> seatAmount;

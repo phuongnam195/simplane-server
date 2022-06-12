@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
  * LeHongQuan
  */
 
-public class BaseRepositoryCustom {
+public abstract class BaseRepositoryCustom {
     @Autowired
     protected MongoTemplate mongoTemplate;
 

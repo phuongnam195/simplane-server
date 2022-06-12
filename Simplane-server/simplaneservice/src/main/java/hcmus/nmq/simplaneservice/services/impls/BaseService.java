@@ -50,4 +50,6 @@ public abstract class BaseService {
     //Service
     @Autowired
     protected IFlightAttrService flightAttrService;
+
+
 }
