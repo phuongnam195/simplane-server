@@ -2,8 +2,11 @@ package hcmus.nmq.simplaneservice.configs;
 
 
 import hcmus.nmq.simplaneservice.security.AuthenticationFilter;
+import hcmus.nmq.simplaneservice.security.TokenAuthenticationProvider;
 import hcmus.nmq.utils.Constants;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -21,7 +24,20 @@ import org.springframework.web.cors.CorsConfiguration;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfig  extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private final TokenAuthenticationProvider tokenAuthenticationProvider;
+
+    @Autowired
+    public SecurityConfig(TokenAuthenticationProvider tokenAuthenticationProvider) {
+        this.tokenAuthenticationProvider = tokenAuthenticationProvider;
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) {
+        auth.authenticationProvider(tokenAuthenticationProvider);
+    }
+
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
@@ -29,7 +45,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .addFilterBefore(
-                        new AuthenticationFilter(authenticationManager(), Constants.AUTHORIZATION_HEADER),
+                        new AuthenticationFilter(authenticationManager(), Constants.HEADER_TOKEN_NAME),
                         BasicAuthenticationFilter.class
                 );
     }

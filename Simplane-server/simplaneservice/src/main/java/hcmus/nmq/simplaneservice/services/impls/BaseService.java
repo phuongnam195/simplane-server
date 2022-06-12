@@ -3,6 +3,7 @@ package hcmus.nmq.simplaneservice.services.impls;
 import hcmus.nmq.simplaneservice.repositories.IAirportRepository;
 import hcmus.nmq.simplaneservice.repositories.ISequenceNumberRepository;
 import hcmus.nmq.simplaneservice.repositories.ISequenceNumberRepositoryCustom;
+import hcmus.nmq.simplaneservice.repositories.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -36,6 +37,8 @@ public abstract class BaseService {
     @Autowired
     protected ISequenceNumberRepository sequenceNumberRepository;
 
+    @Autowired
+    protected IUserRepository userRepository;
 //    @Autowired
 //    protected ISequenceNumberRepositoryCustom sequenceNumberRepositoryCustom;
 

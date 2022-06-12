@@ -2,6 +2,7 @@ package hcmus.nmq.simplaneservice.api;
 
 import hcmus.nmq.entities.Airport;
 import hcmus.nmq.model.dtos.AirportDTO;
+import hcmus.nmq.simplaneservice.annotations.swagger.RequiredHeaderToken;
 import hcmus.nmq.simplaneservice.handler.SimplaneServiceException;
 import hcmus.nmq.utils.Constants;
 import hcmus.nmq.utils.Extensions;
@@ -19,13 +20,18 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(Constants.AIRPORT_SERVICE_URL)
 @Tag(name = "Airport", description = "Airport API")
 public class AirportAPI extends BaseAPI {
+    @RequiredHeaderToken
     @Operation(summary = "Chi tiết sân bay bằng code")
     @GetMapping(value = "/{code}")
     public Airport getAirportByCode(@PathVariable(value = "code") String code) {
         Airport airport = airportRepository.findByCode(code);
+        if(airport == null){
+            throw new SimplaneServiceException("Không tồn tại sân bay!");
+        }
         return airport;
     }
 
+    @RequiredHeaderToken
     @Operation(summary = "Tạo sân bay")
     @PostMapping
     public AirportDTO createAirport(@RequestBody AirportDTO airport) {
@@ -38,6 +44,7 @@ public class AirportAPI extends BaseAPI {
         return airportDTO;
     }
 
+    @RequiredHeaderToken
     @Operation(summary = "Xóa sân bay bằng code")
     @DeleteMapping(value = "/{code}")
     public void deleteAirportByCode(@PathVariable(value = "code") String code){

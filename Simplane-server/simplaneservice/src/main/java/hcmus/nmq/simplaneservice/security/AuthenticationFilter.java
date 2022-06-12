@@ -1,10 +1,15 @@
 package hcmus.nmq.simplaneservice.security;
 
+import hcmus.nmq.simplaneservice.handler.SimplaneServiceException;
+import hcmus.nmq.simplaneservice.jwt.JwtTokenProvider;
 import hcmus.nmq.utils.Constants;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.web.filter.GenericFilterBean;
 
 import javax.servlet.FilterChain;
@@ -22,8 +27,10 @@ import java.util.Optional;
  */
 
 public class AuthenticationFilter extends GenericFilterBean {
+
     private final String HTTP_REQUEST_HEADER_NAME;
     private final AuthenticationManager authenticationManager;
+
 
     public AuthenticationFilter(AuthenticationManager authenticationManager, String requestHeaderName) {
         this.authenticationManager = authenticationManager;
@@ -37,10 +44,10 @@ public class AuthenticationFilter extends GenericFilterBean {
 
         System.out.println("[Request] " + httpRequest.getRemoteAddr() + " - " + httpRequest.getMethod() + " - " + httpRequest.getRequestURI());
 
-//        Optional<String> token = Optional.ofNullable(httpRequest.getHeader(Constants.AUTHORIZATION));
+        Optional<String> token = Optional.ofNullable(httpRequest.getHeader(HTTP_REQUEST_HEADER_NAME));
 
         try {
-//            processHeaderAuthentication(token);
+            token.ifPresent(this::processHeaderAuthentication);
             filterChain.doFilter(servletRequest, servletResponse);
         } catch (InternalAuthenticationServiceException internalAuthenticationServiceException) {
             SecurityContextHolder.clearContext();
@@ -48,13 +55,18 @@ public class AuthenticationFilter extends GenericFilterBean {
         } catch (AuthenticationException authenticationException) {
             SecurityContextHolder.clearContext();
             httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, authenticationException.getMessage());
+        }catch (SimplaneServiceException ex){
+            SecurityContextHolder.clearContext();
+            httpResponse.sendError(HttpServletResponse.SC_BAD_REQUEST, ex.getMessage());
         }
     }
 
-    private void processHeaderAuthentication(Optional<String> token) {
-        if (token.equals(Optional.empty()) || !token.get().equals(Constants.AUTHORIZATION_HEADER)) {
+    private void processHeaderAuthentication(String token) {
+        PreAuthenticatedAuthenticationToken requestAuthentication = new PreAuthenticatedAuthenticationToken(token, null);
+        Authentication responseAuthentication = authenticationManager.authenticate(requestAuthentication);
+        if (responseAuthentication == null || !responseAuthentication.isAuthenticated()) {
             throw new InternalAuthenticationServiceException("Unable to authenticate Domain User for provided credentials");
         }
-
+        SecurityContextHolder.getContext().setAuthentication(responseAuthentication);
     }
 }
