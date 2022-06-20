@@ -35,12 +35,14 @@ public class FlightConverter extends BaseConverter {
         flightDTO.setCode(flight.getCode());
         flightDTO.setDateTime(flight.getDateTime().getTime());
         flightDTO.setDuration(flight.getDuration());
+
         if (flight.getFromAirport() != null) {
             flightDTO.setFromAirport(airportConverter.toDTO(flight.getFromAirport()));
         }
         if (flight.getToAirport() != null) {
             flightDTO.setToAirport(airportConverter.toDTO(flight.getToAirport()));
         }
+        flightDTO.setMiddleAirports(new ArrayList<>());
         if (flight.getMiddleAirports() != null && flight.getMiddleAirports().size() != 0) {
             List<AirportDTO> airportDTOS = new ArrayList<>();
             flight.getMiddleAirports().forEach(airport -> {
@@ -49,7 +51,10 @@ public class FlightConverter extends BaseConverter {
             });
             flightDTO.setMiddleAirports(airportDTOS);
         }
-        flightDTO.setStopDurations(flight.getStopDurations());
+        flightDTO.setStopDurations(new ArrayList<>());
+        if (flight.getStopDurations() != null) {
+            flightDTO.setStopDurations(flight.getStopDurations());
+        }
         flightDTO.setSeatAmount(flight.getSeatAmount());
         flightDTO.setBookedAmount(flight.getBookedAmount());
         return flightDTO;
