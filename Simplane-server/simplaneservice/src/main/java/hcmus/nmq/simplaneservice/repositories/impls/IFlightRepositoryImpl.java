@@ -31,10 +31,10 @@ public class IFlightRepositoryImpl extends BaseRepositoryCustom implements IFlig
         if (!parameterSearchFlight.getFlightId().isBlankOrNull()) {
             flightIds.merge(Collections.singleton(parameterSearchFlight.getFlightId()));
         }
-        if(!parameterSearchFlight.getFromAirportCode().isBlankOrNull()){
+        if (!parameterSearchFlight.getFromAirportCode().isBlankOrNull()) {
             criteria.add(Criteria.where("fromAirportCode").is(parameterSearchFlight.getFromAirportCode().trim()));
         }
-        if(!parameterSearchFlight.getToAirportCode().isBlankOrNull()){
+        if (!parameterSearchFlight.getToAirportCode().isBlankOrNull()) {
             criteria.add(Criteria.where("toAirportCode").is(parameterSearchFlight.getToAirportCode().trim()));
         }
         if (null != parameterSearchFlight.getFromDate()) {
@@ -60,9 +60,6 @@ public class IFlightRepositoryImpl extends BaseRepositoryCustom implements IFlig
         List<Flight> flights = mongoTemplate.find(query, Flight.class);
         totalResult = flights.size();
         return ListWrapper.<Flight>builder()
-                .total(totalResult)
-                .totalPage((totalResult - 1) / parameterSearchFlight.getMaxResult() + 1)
-                .currentPage(parameterSearchFlight.getStartIndex() / (parameterSearchFlight.getMaxResult() + 1))
                 .data(mongoTemplate.find(query, Flight.class))
                 .build();
     }

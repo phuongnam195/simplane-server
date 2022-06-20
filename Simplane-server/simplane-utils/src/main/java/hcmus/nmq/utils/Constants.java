@@ -14,4 +14,5 @@ public class Constants {
     public static final String AUTH_SERVICE_URL = "/auth";
     public static final String FLIGHT_SERVICE_URL = "/flight";
     public static final String AIRPORT_SERVICE_URL = "/air-port";
+    public static final String TICKET_SERVICE_URL = "/ticket";
 }

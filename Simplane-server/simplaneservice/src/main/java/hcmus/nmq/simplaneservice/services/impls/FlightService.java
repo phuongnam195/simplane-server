@@ -94,9 +94,6 @@ public class FlightService extends BaseService implements IFlightService {
             flightProfiles.add(buildFlightProfile(flight));
         });
         return ListWrapper.<FlightProfile>builder()
-                .currentPage(wrapper.getCurrentPage())
-                .totalPage(wrapper.getTotalPage())
-                .total(wrapper.getTotal())
                 .data(flightProfiles)
                 .build();
     }

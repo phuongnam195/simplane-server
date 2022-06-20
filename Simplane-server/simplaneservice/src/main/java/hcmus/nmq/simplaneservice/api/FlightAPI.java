@@ -60,7 +60,7 @@ public class FlightAPI extends BaseAPI {
             currentPage = 1;
         }
         if (maxResult == null || maxResult == 0) {
-            maxResult = 20;
+            maxResult = 50;
         }
         Long startIndex = (long) ((currentPage - 1) * maxResult);
         ParameterSearchFlight parameterSearchFlight = new ParameterSearchFlight();
@@ -82,10 +82,6 @@ public class FlightAPI extends BaseAPI {
             flightDTOS.add(flightConverter.toDTO(flightProfile));
         });
         return ListWrapper.<FlightDTO>builder()
-                .currentPage(currentPage)
-                .maxResult(maxResult)
-                .totalPage(listWrapper.getTotalPage())
-                .total(listWrapper.getTotal())
                 .data(flightDTOS)
                 .build();
     }

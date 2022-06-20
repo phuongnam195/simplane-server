@@ -1,5 +1,6 @@
 package hcmus.nmq.simplaneservice.handler;
 
+import hcmus.nmq.model.wrapper.ListWrapper;
 import hcmus.nmq.model.wrapper.ObjectResponseWrapper;
 import org.springframework.core.MethodParameter;
 import org.springframework.core.io.Resource;
@@ -31,6 +32,7 @@ public class ResponseHandle implements ResponseBodyAdvice<Object> {
                                   @NonNull Class<? extends HttpMessageConverter<?>> aClass, @NonNull ServerHttpRequest serverHttpRequest,
                                   @NonNull ServerHttpResponse serverHttpResponse) {
         if (data instanceof ObjectResponseWrapper) return data;
+        if (data instanceof ListWrapper) return data;
         if (data instanceof String && ((String) data).contains("openapi")) return data;
         return ObjectResponseWrapper.builder().statusCode(200).data(data).build();
     }

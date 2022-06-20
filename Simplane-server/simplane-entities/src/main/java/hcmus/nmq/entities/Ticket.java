@@ -20,7 +20,7 @@ public class Ticket {
     @Id
     private String id;
     private String code;
-    private Date bookTime;
+    private Date bookedTime;
     private String idTicketClass;
     private String idPassenger;
     private String idUser;

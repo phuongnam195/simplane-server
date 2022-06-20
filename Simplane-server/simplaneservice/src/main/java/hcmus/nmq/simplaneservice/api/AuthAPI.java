@@ -37,6 +37,7 @@ public class AuthAPI extends BaseAPI {
         String token = JwtTokenProvider.generateToken(login.getUsername());
         User user = userRepository.findByUsername(login.getUsername());
         Map<String, Object> map = new HashMap<>();
+        map.put("id", user.getId());
         map.put("username", user.getUsername());
         map.put("fullname", user.getFullname());
         map.put("isVerified", user.isVerified());
@@ -44,7 +45,6 @@ public class AuthAPI extends BaseAPI {
         map.put("isAdmin", user.isAdmin());
         return ObjectResponseWrapper.builder()
                 .statusCode(200)
-                .message("Đăng nhập thành công")
                 .data(map)
                 .build();
     }
@@ -68,7 +68,6 @@ public class AuthAPI extends BaseAPI {
         SecurityContextHolder.getContext().setAuthentication(null);
         return ObjectResponseWrapper.builder()
                 .statusCode(200)
-                .message("Thoát thành công")
                 .build();
 
     }

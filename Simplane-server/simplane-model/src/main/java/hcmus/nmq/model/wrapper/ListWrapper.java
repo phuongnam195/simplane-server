@@ -17,13 +17,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ListWrapper<T> {
-    private long total;
+    protected int statusCode;
 
-    private long currentPage;
-
-    private long maxResult;
-
-    private long totalPage;
+    protected String message;
 
     private List<T> data;
 }
