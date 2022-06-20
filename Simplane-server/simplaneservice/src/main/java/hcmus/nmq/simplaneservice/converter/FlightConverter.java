@@ -33,7 +33,7 @@ public class FlightConverter extends BaseConverter {
         flightDTO.setBookedAmount(flight.getBookedAmount());
         flightDTO.setSeatAmount(flight.getSeatAmount());
         flightDTO.setCode(flight.getCode());
-        flightDTO.setDateTime(flight.getDateTime());
+        flightDTO.setDateTime(flight.getDateTime().getTime());
         flightDTO.setDuration(flight.getDuration());
         if (flight.getFromAirport() != null) {
             flightDTO.setFromAirport(airportConverter.toDTO(flight.getFromAirport()));
