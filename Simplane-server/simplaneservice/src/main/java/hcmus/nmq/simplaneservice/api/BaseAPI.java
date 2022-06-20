@@ -3,14 +3,14 @@ package hcmus.nmq.simplaneservice.api;
 import hcmus.nmq.entities.User;
 import hcmus.nmq.simplaneservice.converter.AirportConverter;
 import hcmus.nmq.simplaneservice.converter.FlightConverter;
+import hcmus.nmq.simplaneservice.converter.TicketConverter;
 import hcmus.nmq.simplaneservice.handler.SimplaneServiceException;
 import hcmus.nmq.simplaneservice.jwt.JwtTokenProvider;
-import hcmus.nmq.simplaneservice.repositories.IAirportRepository;
-import hcmus.nmq.simplaneservice.repositories.IFlightRepository;
-import hcmus.nmq.simplaneservice.repositories.ISequenceNumberRepository;
-import hcmus.nmq.simplaneservice.repositories.IUserRepository;
+import hcmus.nmq.simplaneservice.repositories.*;
 import hcmus.nmq.simplaneservice.services.IAirportService;
+import hcmus.nmq.simplaneservice.services.IFlightAttrService;
 import hcmus.nmq.simplaneservice.services.IFlightService;
+import hcmus.nmq.simplaneservice.services.ITicketService;
 import hcmus.nmq.utils.Extensions;
 import lombok.experimental.ExtensionMethod;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +40,9 @@ public abstract class BaseAPI {
     @Autowired
     protected IAirportRepository airportRepository;
 
+    @Autowired
+    protected ITicketRepository ticketRepository;
+
     //service
     @Autowired
     protected IAirportService airportService;
@@ -57,12 +60,21 @@ public abstract class BaseAPI {
     @Autowired
     protected IFlightService flightService;
 
+    @Autowired
+    protected ITicketService ticketService;
+
+    @Autowired
+    protected IFlightAttrService flightAttrService;
+
     //Converter
     @Autowired
     protected FlightConverter flightConverter;
 
     @Autowired
     protected AirportConverter airportConverter;
+
+    @Autowired
+    protected TicketConverter ticketConverter;
 
     protected void isAdmin() {
         SecurityContext securityContext = SecurityContextHolder.getContext();

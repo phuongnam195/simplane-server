@@ -1,4 +1,4 @@
-package hcmus.nmq.model.dtos;
+package hcmus.nmq.model.search;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 /**
- * 9:09 PM 6/20/2022
+ * 1:08 AM 6/21/2022
  * LeHongQuan
  */
 
@@ -16,13 +16,12 @@ import java.util.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TicketDTO {
+public class ParameterSearchTicket {
     private String id;
+//    private String flightId;
+    private Date fromDate;
+    private Date toDate;
     private String flightCode;
-    private Long flightDate;
-    private PassengerDTO passenger;
-    private String ticketClassId;
-    private Double price;
-    private Long bookedTime;
-    private String idUser;
+    private Long startIndex;
+    private Integer maxResult;
 }

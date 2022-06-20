@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 public class PassengerDTO {
     private String id;
     private String firstName;
+    private String lastName;
     private String identityNumber;
     private String email;
     private String phoneNumber;

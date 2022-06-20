@@ -54,7 +54,7 @@ public class FlightAPI extends BaseAPI {
                                              @RequestParam(value = "fromAirportCode", required = false) String fromAirportCode,
                                              @RequestParam(value = "toAirportCode", required = false) String toAirportCode,
                                              @RequestParam(value = "currentPage", required = false) @Min(value = 1, message = "currentPage phải lớn hơn 0") @Parameter(description = "Default: 1") Integer currentPage,
-                                             @RequestParam(value = "maxResult", required = false) @Min(value = 1, message = "maxResult phải lớn hơn 0") @Max(value = 50, message = "maxResult phải bé hơn 50") @Parameter(description = "Default: 20; Size range: 1-50") Integer maxResult) {
+                                             @RequestParam(value = "maxResult", required = false) @Min(value = 1, message = "maxResult phải lớn hơn 0") @Max(value = 50, message = "maxResult phải bé hơn 50") @Parameter(description = "Default: 50; Size range: 1-50") Integer maxResult) {
 
         if (currentPage == null || currentPage == 0) {
             currentPage = 1;
@@ -69,6 +69,9 @@ public class FlightAPI extends BaseAPI {
         }
         if (null != toDate) {
             parameterSearchFlight.setToDate(new Date(toDate));
+        }
+        if(!id.isBlankOrNull()){
+            parameterSearchFlight.setFlightId(id);
         }
         parameterSearchFlight.setFromAirportCode(fromAirportCode);
         parameterSearchFlight.setToAirportCode(toAirportCode);

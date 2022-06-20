@@ -11,6 +11,7 @@ import lombok.experimental.ExtensionMethod;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -74,7 +75,7 @@ public class FlightConverter extends BaseConverter {
             flight.setToAirport(airport);
         }
 
-        flight.setDateTime(flightModel.getDateTime());
+        flight.setDateTime(new Date(flightModel.getDateTime()));
         flight.setDuration(flightModel.getDuration());
         List<String> airportMiddleCodes = flightModel.getMiddleAirportCodes();
         flight.setMiddleAirportCodes(airportMiddleCodes);

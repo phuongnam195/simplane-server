@@ -1,5 +1,10 @@
 package hcmus.nmq.simplaneservice.services.impls;
 
+import hcmus.nmq.entities.Passenger;
+import hcmus.nmq.simplaneservice.converter.AirportConverter;
+import hcmus.nmq.simplaneservice.converter.FlightConverter;
+import hcmus.nmq.simplaneservice.converter.PassengerConverter;
+import hcmus.nmq.simplaneservice.converter.TicketConverter;
 import hcmus.nmq.simplaneservice.repositories.*;
 import hcmus.nmq.simplaneservice.services.IFlightAttrService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,10 +51,29 @@ public abstract class BaseService {
     @Autowired
     protected IFlightAttrRepository flightAttrRepository;
 
+    @Autowired
+    protected IPassengerRepository passengerRepository;
+
+    @Autowired
+    protected ITicketRepository ticketRepository;
+
 
     //Service
     @Autowired
     protected IFlightAttrService flightAttrService;
 
+
+    //Converter
+    @Autowired
+    protected FlightConverter flightConverter;
+
+    @Autowired
+    protected PassengerConverter passengerConverter;
+
+    @Autowired
+    protected TicketConverter ticketConverter;
+
+    @Autowired
+    protected AirportConverter airportConverter;
 
 }
