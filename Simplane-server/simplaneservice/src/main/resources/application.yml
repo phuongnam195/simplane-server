@@ -1,0 +1,22 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://lhquan:25251325Quan@cluster0.0u1hb.mongodb.net/?retryWrites=true&w=majority
+      database: simplane-server
+  main:
+    allow-circular-references: true
+
+
+server:
+  port: 8282
+  servlet:
+    context-path: /simplane-service
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui
+    disable-swagger-default-url: true
+
+

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="simplaneservice" />
+        <module name="simplane-utils" />
+        <module name="simplane-model" />
+        <module name="simplane-entities" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="simplane-entities" options="-parameters" />
+      <module name="simplane-model" options="-parameters" />
+      <module name="simplane-utils" options="-parameters" />
+      <module name="simplaneservice" options="-parameters" />
+    </option>
+  </component>
+</project>
