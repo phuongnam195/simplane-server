@@ -8,7 +8,7 @@ package hcmus.nmq.utils;
 public class Constants {
     public static final String AUTHORIZATION = "AUTHORIZATION";
     public static final String AUTHORIZATION_HEADER = "#hcmus";
-    public static final String HEADER_TOKEN_NAME = "NMQ-Access-Token";
+    public static final String HEADER_TOKEN_NAME = "accessToken";
 
     //    public static final String API_VERSION = "v1";
     public static final String AUTH_SERVICE_URL = "/auth";
