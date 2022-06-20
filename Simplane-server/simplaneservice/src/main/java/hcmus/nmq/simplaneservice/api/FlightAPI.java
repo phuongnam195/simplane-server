@@ -47,7 +47,7 @@ public class FlightAPI extends BaseAPI {
     }
 
     @Operation(summary = "Lấy danh sách chuyến bay ")
-    @GetMapping(value = "/")
+    @GetMapping()
     public ListWrapper<FlightDTO> getFlights(@RequestParam(value = "id", required = false) String id,
                                              @RequestParam(value = "fromDate", required = false) Long fromDate,
                                              @RequestParam(value = "toDate", required = false) Long toDate,
@@ -92,7 +92,7 @@ public class FlightAPI extends BaseAPI {
 
     @RequiredHeaderToken
     @Operation(summary = "Tạo chuyến bay ")
-    @PostMapping(value = "/")
+    @PostMapping()
     public FlightDTO createFlight(@RequestBody FlightModel flightModel) {
         validateCreateFlight(flightModel);
 

@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 public class AirportAPI extends BaseAPI {
 
     @Operation(summary = "Chi tiết sân bay bằng code")
-    @GetMapping(value = "/")
+    @GetMapping()
     public Airport getAirportByCode(@RequestParam(value = "code") String code) {
         Airport airport = airportRepository.findByCode(code);
         if(airport == null){
@@ -47,7 +47,7 @@ public class AirportAPI extends BaseAPI {
 
     @RequiredHeaderToken
     @Operation(summary = "Xóa sân bay bằng code")
-    @DeleteMapping(value = "/")
+    @DeleteMapping()
     public void deleteAirportByCode(@RequestParam(value = "code") String code){
         isAdmin();
         Airport airport = airportRepository.findByCode(code);
