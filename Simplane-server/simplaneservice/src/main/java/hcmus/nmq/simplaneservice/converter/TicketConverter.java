@@ -20,10 +20,10 @@ import java.util.Optional;
 public class TicketConverter extends BaseConverter {
     public Ticket fromDTO(TicketDTO ticketDTO) {
         return Ticket.builder()
-                .bookedTime(new Date(ticketDTO.getBookedTime()))
+                .bookedTime(ticketDTO.getBookedTime())
                 .code(ticketDTO.getFlightCode())
                 .idPassenger(ticketDTO.getPassenger().getId())
-                .flightDate(new Date(ticketDTO.getFlightDate()))
+                .flightDate(ticketDTO.getFlightDate())
                 .idTicketClass(ticketDTO.getTicketClassId())
                 .price(ticketDTO.getPrice())
                 .idUser(ticketDTO.getIdUser()).build();
@@ -32,9 +32,9 @@ public class TicketConverter extends BaseConverter {
     public TicketDTO toDTO(Ticket ticket) {
         TicketDTO ticketDTO = TicketDTO.builder()
                 .id(ticket.getId())
-                .bookedTime(ticket.getBookedTime().getTime())
+                .bookedTime(ticket.getBookedTime())
                 .flightCode(ticket.getCode())
-                .flightDate(ticket.getFlightDate().getTime())
+                .flightDate(ticket.getFlightDate())
                 .price(ticket.getPrice())
                 .ticketClassId(ticket.getIdTicketClass())
                 .idUser(ticket.getIdUser())

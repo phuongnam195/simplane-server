@@ -18,6 +18,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.experimental.ExtensionMethod;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Max;
@@ -60,8 +61,8 @@ public class TicketAPI extends BaseAPI {
     @Operation(summary = "Lấy danh sách vé máy bay")
     @GetMapping()
     public ListWrapper<TicketDTO> getListTicket(@RequestParam(value = "id", required = false) String id,
-                                                @RequestParam(value = "fromDate", required = false) Long fromDate,
-                                                @RequestParam(value = "toDate", required = false) Long toDate,
+                                                @RequestParam(value = "fromDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'") Date fromDate,
+                                                @RequestParam(value = "toDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'") Date toDate,
                                                 @RequestParam(value = "flightCode", required = false) String flightCode,
                                                 @RequestParam(value = "currentPage", required = false) @Min(value = 1, message = "currentPage phải lớn hơn 0") @Parameter(description = "Default: 1") Integer currentPage,
                                                 @RequestParam(value = "maxResult", required = false) @Min(value = 1, message = "maxResult phải lớn hơn 0") @Max(value = 50, message = "maxResult phải bé hơn 50") @Parameter(description = "Default: 50; Size range: 1-50") Integer maxResult) {
@@ -74,15 +75,15 @@ public class TicketAPI extends BaseAPI {
         Long startIndex = (long) ((currentPage - 1) * maxResult);
         ParameterSearchTicket parameterSearchTicket = new ParameterSearchTicket();
         if (null != fromDate) {
-            parameterSearchTicket.setFromDate(new Date(fromDate));
+            parameterSearchTicket.setFromDate(fromDate);
         }
         if (null != toDate) {
-            parameterSearchTicket.setToDate(new Date(toDate));
+            parameterSearchTicket.setToDate(toDate);
         }
-        if(!flightCode.isBlankOrNull()){
+        if (!flightCode.isBlankOrNull()) {
             parameterSearchTicket.setFlightCode(flightCode);
         }
-        if(!id.isBlankOrNull()){
+        if (!id.isBlankOrNull()) {
             parameterSearchTicket.setId(id);
         }
 
@@ -92,6 +93,17 @@ public class TicketAPI extends BaseAPI {
         return ListWrapper.<TicketDTO>builder()
                 .data(listWrapper.getData())
                 .build();
+    }
+
+    @RequiredHeaderToken
+    @Operation(summary = "Xóa vé máy bay")
+    @DeleteMapping("/{id}")
+    public void deleteTicket(@PathVariable(value = "id", required = true) String id) {
+        Optional<Ticket> ticket = ticketRepository.findById(id);
+        if (!ticket.isPresent()) {
+            throw new SimplaneServiceException("Không tồn tại vé có id: " + id + "!");
+        }
+        ticketService.deleteTicket(id);
     }
 
     private void validateCreateTicket(TicketDTO ticketDTO) {

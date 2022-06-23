@@ -1,5 +1,6 @@
 package hcmus.nmq.model.profile;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import hcmus.nmq.entities.Airport;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,6 +25,7 @@ public class FlightProfile {
     private String code;
     private Airport fromAirport;
     private Airport toAirport;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.mmmuuu'Z'")
     private Date dateTime;
     private Double duration;
     private Map<String, Double> seatAmount;

@@ -1,5 +1,7 @@
 package hcmus.nmq.simplaneservice.api;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.sun.deploy.nativesandbox.comm.Response;
 import hcmus.nmq.entities.Airport;
 import hcmus.nmq.entities.Flight;
 import hcmus.nmq.model.dtos.FlightDTO;
@@ -18,6 +20,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.experimental.ExtensionMethod;
 import org.springframework.data.mongodb.repository.Query;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Max;
@@ -44,13 +47,13 @@ public class FlightAPI extends BaseAPI {
             throw new SimplaneServiceException(id + " không tồn tại! Vui lòng kiểm tra lại!");
         }
         return flightConverter.toDTO(flightProfile);
-    }
+    } @JsonFormat
 
     @Operation(summary = "Lấy danh sách chuyến bay ")
     @GetMapping()
     public ListWrapper<FlightDTO> getFlights(@RequestParam(value = "id", required = false) String id,
-                                             @RequestParam(value = "fromDate", required = false) Long fromDate,
-                                             @RequestParam(value = "toDate", required = false) Long toDate,
+                                             @RequestParam(value = "fromDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.mmmuuu'Z'") Date fromDate,
+                                             @RequestParam(value = "toDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.mmmuuu'Z'") Date toDate,
                                              @RequestParam(value = "fromAirportCode", required = false) String fromAirportCode,
                                              @RequestParam(value = "toAirportCode", required = false) String toAirportCode,
                                              @RequestParam(value = "currentPage", required = false) @Min(value = 1, message = "currentPage phải lớn hơn 0") @Parameter(description = "Default: 1") Integer currentPage,
@@ -65,12 +68,12 @@ public class FlightAPI extends BaseAPI {
         Long startIndex = (long) ((currentPage - 1) * maxResult);
         ParameterSearchFlight parameterSearchFlight = new ParameterSearchFlight();
         if (null != fromDate) {
-            parameterSearchFlight.setFromDate(new Date(fromDate));
+            parameterSearchFlight.setFromDate(fromDate);
         }
         if (null != toDate) {
-            parameterSearchFlight.setToDate(new Date(toDate));
+            parameterSearchFlight.setToDate(toDate);
         }
-        if(!id.isBlankOrNull()){
+        if (!id.isBlankOrNull()) {
             parameterSearchFlight.setFlightId(id);
         }
         parameterSearchFlight.setFromAirportCode(fromAirportCode);
@@ -99,6 +102,18 @@ public class FlightAPI extends BaseAPI {
         String id = flightService.saveFlight(flight);
         FlightProfile flightProfile = flightService.getFlightProfileById(id);
         return flightConverter.toDTO(flightProfile);
+    }
+
+    @RequiredHeaderToken
+    @Operation(summary = "Xóa chuyến bay ")
+    @DeleteMapping("/{id}")
+    public void deleteFlight(@PathVariable("id") String id) {
+        FlightProfile flight = flightService.getFlightProfileById(id);
+        if (flight == null) {
+            throw new SimplaneServiceException("Không tồn tại chuyến bay với id: " + id + "! Vui lòng kiểm tra lại!");
+        }
+        flightRepository.deleteById(flight.getId());
+        flightAttrRepository.deleteAllByFlightId(flight.getId());
     }
 
     public void validateCreateFlight(FlightModel flightModel) {

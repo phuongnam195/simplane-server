@@ -24,7 +24,8 @@ public class FlightDTO {
     private String code;
     private AirportDTO fromAirport;
     private AirportDTO toAirport;
-    private Long dateTime;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.mmmuuu'Z'")
+    private Date dateTime;
     private Double duration;
     private Map<String,Double> seatAmount;
     private Map<String,Double> bookedAmount;

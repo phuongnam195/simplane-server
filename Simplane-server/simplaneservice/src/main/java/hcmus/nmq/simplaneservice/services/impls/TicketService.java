@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * 11:22 PM 6/20/2022
@@ -63,6 +64,29 @@ public class TicketService extends BaseService implements ITicketService {
         return ListWrapper.<TicketDTO>builder()
                 .data(ticketDTOS)
                 .build();
+
+    }
+
+    @Override
+    public void deleteTicket(String id) {
+        Optional<Ticket> ticket = ticketRepository.findById(id);
+        ticket.ifPresent(t -> {
+            ticketRepository.deleteById(id);
+            String idTicketClass = t.getIdTicketClass();
+            String idFlight = t.getCode();
+            Optional<Flight> flight = flightRepository.findById(idFlight);
+            flight.ifPresent(f -> {
+                FlightAttribute flightAttributeSeat = flightAttrRepository
+                        .findByTypeAndIdTicketClassAndFlightId(EnumConst.TypeAttrFlight.SEAT.toString(), idTicketClass, f.getId());
+                flightAttributeSeat.setAmount(flightAttributeSeat.getAmount() + 1);
+                flightAttrRepository.save(flightAttributeSeat);
+                FlightAttribute flightAttributeBook = flightAttrRepository
+                        .findByTypeAndIdTicketClassAndFlightId(EnumConst.TypeAttrFlight.BOOK.toString(), idTicketClass, f.getId());
+                flightAttributeBook.setAmount(flightAttributeBook.getAmount() + 1);
+                flightAttrRepository.save(flightAttributeBook);
+
+            });
+        });
 
     }
 }

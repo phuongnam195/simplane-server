@@ -10,4 +10,6 @@ public interface ITicketService {
     String saveTicket(TicketDTO ticketModel);
 
     ListWrapper<TicketDTO> searchTicketDTOS(ParameterSearchTicket parameterSearchTicket);
+    
+    void deleteTicket(String id);
 }

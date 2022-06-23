@@ -41,7 +41,7 @@ public class AuthAPI extends BaseAPI {
         map.put("username", user.getUsername());
         map.put("fullname", user.getFullname());
         map.put("isVerified", user.isVerified());
-        map.put("token", token);
+        map.put("accessToken", token);
         map.put("isAdmin", user.isAdmin());
         return ObjectResponseWrapper.builder()
                 .statusCode(200)

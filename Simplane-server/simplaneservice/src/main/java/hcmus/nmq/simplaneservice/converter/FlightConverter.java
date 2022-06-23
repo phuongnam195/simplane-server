@@ -34,7 +34,7 @@ public class FlightConverter extends BaseConverter {
         flightDTO.setBookedAmount(flight.getBookedAmount());
         flightDTO.setSeatAmount(flight.getSeatAmount());
         flightDTO.setCode(flight.getCode());
-        flightDTO.setDateTime(flight.getDateTime().getTime());
+        flightDTO.setDateTime(flight.getDateTime());
         flightDTO.setDuration(flight.getDuration());
 
         if (flight.getFromAirport() != null) {
@@ -75,7 +75,7 @@ public class FlightConverter extends BaseConverter {
             flight.setToAirport(airport);
         }
 
-        flight.setDateTime(new Date(flightModel.getDateTime()));
+        flight.setDateTime(flightModel.getDateTime());
         flight.setDuration(flightModel.getDuration());
         List<String> airportMiddleCodes = flightModel.getMiddleAirportCodes();
         flight.setMiddleAirportCodes(airportMiddleCodes);

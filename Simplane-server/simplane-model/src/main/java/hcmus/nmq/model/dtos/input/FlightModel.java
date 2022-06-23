@@ -24,7 +24,9 @@ public class FlightModel {
     private String id;
     private String fromAirportCode;
     private String toAirportCode;
-    private Long dateTime;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.mmmuuu'Z'")
+    private Date dateTime;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.mmmuuu'Z'")
     private Double duration;
     private Map<String, Double> seatAmount;
     private Map<String, Double> bookedAmount;
