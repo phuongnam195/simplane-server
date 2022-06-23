@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Simplane-server/simplane-entities/simplane-entities.iml" filepath="$PROJECT_DIR$/Simplane-server/simplane-entities/simplane-entities.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Simplane-server/simplane-model/simplane-model.iml" filepath="$PROJECT_DIR$/Simplane-server/simplane-model/simplane-model.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Simplane-server/simplane-server.iml" filepath="$PROJECT_DIR$/Simplane-server/simplane-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Simplane-server/simplane-utils/simplane-utils.iml" filepath="$PROJECT_DIR$/Simplane-server/simplane-utils/simplane-utils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Simplane-server/simplaneservice/simplaneservice.iml" filepath="$PROJECT_DIR$/Simplane-server/simplaneservice/simplaneservice.iml" />
+    </modules>
+  </component>
+</project>

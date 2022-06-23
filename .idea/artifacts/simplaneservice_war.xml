@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="simplaneservice:war">
+    <output-path>$PROJECT_DIR$/Simplane-server/simplaneservice/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>simplaneservice</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="simplaneservice-1.0.war">
+      <element id="artifact" artifact-name="simplaneservice:war exploded" />
+    </root>
+  </artifact>
+</component>
