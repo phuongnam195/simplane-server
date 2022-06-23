@@ -2,6 +2,8 @@ package hcmus.nmq.simplaneservice.api;
 
 import hcmus.nmq.entities.Airport;
 import hcmus.nmq.model.dtos.AirportDTO;
+import hcmus.nmq.model.dtos.FlightDTO;
+import hcmus.nmq.model.wrapper.ListWrapper;
 import hcmus.nmq.simplaneservice.annotations.swagger.RequiredHeaderToken;
 import hcmus.nmq.simplaneservice.handler.SimplaneServiceException;
 import hcmus.nmq.utils.Constants;
@@ -10,6 +12,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.experimental.ExtensionMethod;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 11:35 AM 5/28/2022
@@ -25,10 +29,19 @@ public class AirportAPI extends BaseAPI {
     @GetMapping()
     public Airport getAirportByCode(@RequestParam(value = "code") String code) {
         Airport airport = airportRepository.findByCode(code);
-        if(airport == null){
+        if (airport == null) {
             throw new SimplaneServiceException("Không tồn tại sân bay!");
         }
         return airport;
+    }
+
+    @Operation(summary = "Danh sách sân bay")
+    @GetMapping(value = "/list")
+    public ListWrapper<Airport> getAirports() {
+        List<Airport> airports = airportRepository.findAll();
+        return ListWrapper.<Airport>builder()
+                .data(airports)
+                .build();
     }
 
     @RequiredHeaderToken
@@ -48,7 +61,7 @@ public class AirportAPI extends BaseAPI {
     @RequiredHeaderToken
     @Operation(summary = "Xóa sân bay bằng code")
     @DeleteMapping()
-    public void deleteAirportByCode(@RequestParam(value = "code") String code){
+    public void deleteAirportByCode(@RequestParam(value = "code") String code) {
         isAdmin();
         Airport airport = airportRepository.findByCode(code);
         airportRepository.delete(airport);

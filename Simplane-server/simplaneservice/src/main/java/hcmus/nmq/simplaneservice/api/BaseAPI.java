@@ -49,6 +49,9 @@ public abstract class BaseAPI {
 
     @Autowired
     protected IFlightAdjustmentRepository flightAdjustmentRepository;
+    
+    @Autowired
+    protected ITicketClassRepository ticketClassRepository;
 
     //service
     @Autowired

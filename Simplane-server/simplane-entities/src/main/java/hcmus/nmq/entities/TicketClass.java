@@ -22,7 +22,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class TicketClass {
     @Id
     private String id;
-    private String name;
     private String viName;
     private String enName;
     private Boolean canChange;
