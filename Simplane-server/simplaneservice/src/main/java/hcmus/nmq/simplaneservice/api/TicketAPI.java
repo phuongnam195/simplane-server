@@ -61,8 +61,8 @@ public class TicketAPI extends BaseAPI {
     @Operation(summary = "Lấy danh sách vé máy bay")
     @GetMapping()
     public ListWrapper<TicketDTO> getListTicket(@RequestParam(value = "id", required = false) String id,
-                                                @RequestParam(value = "fromDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'") Date fromDate,
-                                                @RequestParam(value = "toDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'") Date toDate,
+                                                @RequestParam(value = "fromDate", required = false) @DateTimeFormat(pattern = Constants.DATE_TIME_FORMAT) Date fromDate,
+                                                @RequestParam(value = "toDate", required = false) @DateTimeFormat(pattern = Constants.DATE_TIME_FORMAT) Date toDate,
                                                 @RequestParam(value = "flightCode", required = false) String flightCode,
                                                 @RequestParam(value = "currentPage", required = false) @Min(value = 1, message = "currentPage phải lớn hơn 0") @Parameter(description = "Default: 1") Integer currentPage,
                                                 @RequestParam(value = "maxResult", required = false) @Min(value = 1, message = "maxResult phải lớn hơn 0") @Max(value = 50, message = "maxResult phải bé hơn 50") @Parameter(description = "Default: 50; Size range: 1-50") Integer maxResult) {

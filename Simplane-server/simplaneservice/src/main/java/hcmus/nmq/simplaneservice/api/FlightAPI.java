@@ -1,25 +1,20 @@
 package hcmus.nmq.simplaneservice.api;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.sun.deploy.nativesandbox.comm.Response;
 import hcmus.nmq.entities.Airport;
-import hcmus.nmq.entities.Flight;
 import hcmus.nmq.model.dtos.FlightDTO;
 import hcmus.nmq.model.dtos.input.FlightModel;
 import hcmus.nmq.model.profile.FlightProfile;
 import hcmus.nmq.model.search.ParameterSearchFlight;
 import hcmus.nmq.model.wrapper.ListWrapper;
 import hcmus.nmq.simplaneservice.annotations.swagger.RequiredHeaderToken;
-import hcmus.nmq.simplaneservice.converter.FlightConverter;
 import hcmus.nmq.simplaneservice.handler.SimplaneServiceException;
-import hcmus.nmq.simplaneservice.until.FlightUtils;
 import hcmus.nmq.utils.Constants;
 import hcmus.nmq.utils.Extensions;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.experimental.ExtensionMethod;
-import org.springframework.data.mongodb.repository.Query;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,8 +47,8 @@ public class FlightAPI extends BaseAPI {
     @Operation(summary = "Lấy danh sách chuyến bay ")
     @GetMapping()
     public ListWrapper<FlightDTO> getFlights(@RequestParam(value = "id", required = false) String id,
-                                             @RequestParam(value = "fromDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.mmmuuu'Z'") Date fromDate,
-                                             @RequestParam(value = "toDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.mmmuuu'Z'") Date toDate,
+                                             @RequestParam(value = "fromDate", required = false) @DateTimeFormat(pattern = Constants.DATE_TIME_FORMAT) Date fromDate,
+                                             @RequestParam(value = "toDate", required = false) @DateTimeFormat(pattern = Constants.DATE_TIME_FORMAT) Date toDate,
                                              @RequestParam(value = "fromAirportCode", required = false) String fromAirportCode,
                                              @RequestParam(value = "toAirportCode", required = false) String toAirportCode,
                                              @RequestParam(value = "currentPage", required = false) @Min(value = 1, message = "currentPage phải lớn hơn 0") @Parameter(description = "Default: 1") Integer currentPage,
