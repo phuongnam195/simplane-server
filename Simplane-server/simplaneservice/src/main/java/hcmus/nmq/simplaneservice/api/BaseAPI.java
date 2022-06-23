@@ -11,6 +11,7 @@ import hcmus.nmq.simplaneservice.services.IAirportService;
 import hcmus.nmq.simplaneservice.services.IFlightAttrService;
 import hcmus.nmq.simplaneservice.services.IFlightService;
 import hcmus.nmq.simplaneservice.services.ITicketService;
+import hcmus.nmq.simplaneservice.services.impls.UserService;
 import hcmus.nmq.utils.Extensions;
 import lombok.experimental.ExtensionMethod;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,10 +47,15 @@ public abstract class BaseAPI {
     @Autowired
     protected IFlightAttrRepository flightAttrRepository;
 
+    @Autowired
+    protected IFlightAdjustmentRepository flightAdjustmentRepository;
+
     //service
     @Autowired
     protected IAirportService airportService;
 
+    @Autowired
+    protected UserService userService;
 
     @Autowired
     protected ISequenceNumberRepository sequenceNumberRepository;

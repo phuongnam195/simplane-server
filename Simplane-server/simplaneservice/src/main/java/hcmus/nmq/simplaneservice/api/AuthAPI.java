@@ -87,6 +87,8 @@ public class AuthAPI extends BaseAPI {
                 .isAdmin(userDTO.getIsAdmin())
                 .build();
         userRepository.save(user);
+        String token = JwtTokenProvider.generateToken(userDTO.getUsername());
+        userDTO.setAccessToken(token);
         return userDTO;
     }
 

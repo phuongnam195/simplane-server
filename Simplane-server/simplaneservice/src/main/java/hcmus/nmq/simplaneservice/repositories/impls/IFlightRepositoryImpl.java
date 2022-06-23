@@ -23,13 +23,13 @@ import java.util.List;
 public class IFlightRepositoryImpl extends BaseRepositoryCustom implements IFlightRepositoryCustom {
 
     @Override
-    public ListWrapper<Flight> searchProduct(ParameterSearchFlight parameterSearchFlight) {
+    public ListWrapper<Flight> searchFlights(ParameterSearchFlight parameterSearchFlight) {
         Collection<String> flightIds = null;
         Collection<String> excludeFlightIds = null;
         List<Criteria> criteria = new ArrayList<>();
         criteria.add(Criteria.where("deleted").ne(true));
         if (!parameterSearchFlight.getFlightId().isBlankOrNull()) {
-            flightIds.merge(Collections.singleton(parameterSearchFlight.getFlightId()));
+            flightIds = flightIds.merge(Collections.singleton(parameterSearchFlight.getFlightId()));
         }
         if (!parameterSearchFlight.getFromAirportCode().isBlankOrNull()) {
             criteria.add(Criteria.where("fromAirportCode").is(parameterSearchFlight.getFromAirportCode().trim()));
@@ -42,6 +42,9 @@ public class IFlightRepositoryImpl extends BaseRepositoryCustom implements IFlig
         }
         if (null != parameterSearchFlight.getToDate()) {
             criteria.add(Criteria.where("dateTime").lte(parameterSearchFlight.getToDate()));
+        }
+        if (flightIds != null) {
+            criteria.add(Criteria.where("_id").in(flightIds));
         }
         Query query = new Query();
         query.addCriteria(new Criteria().andOperator(criteria));

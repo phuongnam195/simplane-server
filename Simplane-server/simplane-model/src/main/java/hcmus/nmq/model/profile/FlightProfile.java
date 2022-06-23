@@ -30,6 +30,7 @@ public class FlightProfile {
     private Double duration;
     private Map<String, Double> seatAmount;
     private Map<String, Double> bookedAmount;
+    private Map<String,Double> ticketClassPrice;
     private List<String> middleAirportCodes;
     private List<Airport> middleAirports;
     private List<Double> stopDurations;

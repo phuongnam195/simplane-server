@@ -29,6 +29,7 @@ public class FlightDTO {
     private Double duration;
     private Map<String,Double> seatAmount;
     private Map<String,Double> bookedAmount;
+    private Map<String,Double> ticketClassPrice;
     private List<AirportDTO> middleAirports;
     private List<Double> stopDurations;
 }

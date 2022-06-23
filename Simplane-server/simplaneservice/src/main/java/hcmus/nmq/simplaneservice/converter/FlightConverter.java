@@ -58,6 +58,7 @@ public class FlightConverter extends BaseConverter {
         }
         flightDTO.setSeatAmount(flight.getSeatAmount());
         flightDTO.setBookedAmount(flight.getBookedAmount());
+        flightDTO.setTicketClassPrice(flight.getTicketClassPrice());
         return flightDTO;
     }
 
@@ -83,7 +84,9 @@ public class FlightConverter extends BaseConverter {
             List<Airport> airports = airportRepository.findAllByCode(airportMiddleCodes);
             flight.setMiddleAirports(airports);
         }
-
+        if(flightModel.getTicketClassPrice() != null){
+            flight.setTicketClassPrice(flightModel.getTicketClassPrice());
+        }
         if (flightModel.getBookedAmount() != null) {
             flight.setBookedAmount(flightModel.getBookedAmount());
         }

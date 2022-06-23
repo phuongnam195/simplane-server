@@ -5,5 +5,5 @@ import hcmus.nmq.model.search.ParameterSearchFlight;
 import hcmus.nmq.model.wrapper.ListWrapper;
 
 public interface IFlightRepositoryCustom {
-    ListWrapper<Flight> searchProduct(ParameterSearchFlight parameterSearchFlight);
+    ListWrapper<Flight> searchFlights(ParameterSearchFlight parameterSearchFlight);
 }

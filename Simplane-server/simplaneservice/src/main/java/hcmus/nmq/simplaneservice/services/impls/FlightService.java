@@ -2,11 +2,11 @@ package hcmus.nmq.simplaneservice.services.impls;
 
 import hcmus.nmq.entities.Airport;
 import hcmus.nmq.entities.Flight;
+import hcmus.nmq.entities.FlightAdjustment;
 import hcmus.nmq.entities.FlightAttribute;
 import hcmus.nmq.model.profile.FlightProfile;
 import hcmus.nmq.model.search.ParameterSearchFlight;
 import hcmus.nmq.model.wrapper.ListWrapper;
-import hcmus.nmq.simplaneservice.services.IFlightAttrService;
 import hcmus.nmq.simplaneservice.services.IFlightService;
 import hcmus.nmq.simplaneservice.until.FlightUtils;
 import hcmus.nmq.utils.EnumConst;
@@ -69,6 +69,16 @@ public class FlightService extends BaseService implements IFlightService {
                 flightAttrRepository.save(book);
             }
         }
+        Map<String,Double> mapIdTicketClassPrice = flight.getTicketClassPrice();
+        if(mapIdTicketClassPrice != null){
+            for(Map.Entry<String,Double> entry: mapIdTicketClassPrice.entrySet()){
+                FlightAdjustment flightAdjustment = new FlightAdjustment();
+                flightAdjustment.setFlightId(flightNew.getId());
+                flightAdjustment.setIdTicketClass(entry.getKey());
+                flightAdjustment.setPrice(entry.getValue());
+                flightAdjustmentRepository.save(flightAdjustment);
+            }
+        }
         Flight flightSave = flightRepository.save(flightNew);
         return flightSave.getId();
     }
@@ -87,7 +97,7 @@ public class FlightService extends BaseService implements IFlightService {
 
     @Override
     public ListWrapper<FlightProfile> searchFlightProfiles(ParameterSearchFlight parameterSearchFlight) {
-        ListWrapper<Flight> wrapper = flightRepository.searchProduct(parameterSearchFlight);
+        ListWrapper<Flight> wrapper = flightRepository.searchFlights(parameterSearchFlight);
         List<Flight> flights = new ArrayList<>(wrapper.getData());
         List<FlightProfile> flightProfiles = new ArrayList<>();
         flights.forEach(flight -> {
@@ -126,6 +136,10 @@ public class FlightService extends BaseService implements IFlightService {
 
         Map<String,Double> mapBook = flightAttrService.getMapAttrByFlightId(flightProfile.getId(),EnumConst.TypeAttrFlight.BOOK.toString());
         flightProfile.setBookedAmount(mapBook);
+
+        Map<String,Double> mapIdTicketClassPrice = flightAdjustmentService.getMapAdjustmentByFlightId(flightProfile.getId());
+        flightProfile.setTicketClassPrice(mapIdTicketClassPrice);
+
         return flightProfile;
 
     }

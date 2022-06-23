@@ -3,8 +3,11 @@ package hcmus.nmq.simplaneservice.repositories;
 import hcmus.nmq.entities.Ticket;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
+import java.util.List;
 import java.util.Optional;
 
-public interface ITicketRepository  extends MongoRepository<Ticket,String>,ITicketRepositoryCustom {
+public interface ITicketRepository extends MongoRepository<Ticket, String>, ITicketRepositoryCustom {
     Optional<Ticket> findById(String id);
+
+    List<Ticket> findAllByIdPassengerIn(List<String> idPassenger);
 }

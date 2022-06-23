@@ -30,7 +30,7 @@ public class ITicketRepositoryImpl extends BaseRepositoryCustom implements ITick
         List<Criteria> criteria = new ArrayList<>();
         criteria.add(Criteria.where("deleted").ne(true));
         if (!parameterSearchTicket.getId().isBlankOrNull()) {
-            ticketIds.merge(Collections.singleton(parameterSearchTicket.getId()));
+            ticketIds = ticketIds.merge(Collections.singleton(parameterSearchTicket.getId()));
         }
         if (null != parameterSearchTicket.getFromDate()) {
             criteria.add(Criteria.where("bookedTime").gte(parameterSearchTicket.getFromDate()));
@@ -40,6 +40,9 @@ public class ITicketRepositoryImpl extends BaseRepositoryCustom implements ITick
         }
         if (!parameterSearchTicket.getFlightCode().isBlankOrNull()) {
             criteria.add(Criteria.where("code").is(parameterSearchTicket.getFlightCode().trim()));
+        }
+        if (ticketIds != null) {
+            criteria.add(Criteria.where("_id").in(ticketIds));
         }
         Query query = new Query();
         query.addCriteria(new Criteria().andOperator(criteria));
