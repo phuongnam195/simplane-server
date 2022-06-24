@@ -1,6 +1,5 @@
 package hcmus.nmq.simplaneservice.api;
 
-import hcmus.nmq.model.dtos.FlightDTO;
 import hcmus.nmq.model.dtos.StaffDTO;
 import hcmus.nmq.model.search.ParameterSearchUser;
 import hcmus.nmq.model.wrapper.ListWrapper;
