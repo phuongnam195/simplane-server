@@ -4,6 +4,7 @@ import hcmus.nmq.entities.Airport;
 import hcmus.nmq.model.dtos.AirportDTO;
 import hcmus.nmq.model.dtos.FlightDTO;
 import hcmus.nmq.model.wrapper.ListWrapper;
+import hcmus.nmq.model.wrapper.ObjectResponseWrapper;
 import hcmus.nmq.simplaneservice.annotations.swagger.RequiredHeaderToken;
 import hcmus.nmq.simplaneservice.handler.SimplaneServiceException;
 import hcmus.nmq.utils.Constants;
@@ -72,10 +73,11 @@ public class AirportAPI extends BaseAPI {
     @RequiredHeaderToken
     @Operation(summary = "Xóa sân bay bằng code")
     @DeleteMapping()
-    public void deleteAirportByCode(@RequestParam(value = "code") String code) {
+    public ObjectResponseWrapper deleteAirportByCode(@RequestParam(value = "code") String code) {
         isAdmin();
         Airport airport = airportRepository.findByCode(code);
         airportRepository.delete(airport);
+        return ObjectResponseWrapper.builder().data("delete").statusCode(200).build();
     }
 
     public void validateCreate(AirportDTO airport) {

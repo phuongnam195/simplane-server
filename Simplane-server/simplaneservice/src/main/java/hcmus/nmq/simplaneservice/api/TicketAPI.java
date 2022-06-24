@@ -102,7 +102,7 @@ public class TicketAPI extends BaseAPI {
             throw new SimplaneServiceException("Không tồn tại vé có id: " + id + "!");
         }
         ticketService.deleteTicket(id);
-        return ObjectResponseWrapper.builder().data(null).statusCode(200).build();
+        return ObjectResponseWrapper.builder().data("delete").statusCode(200).build();
     }
 
     private void validateCreateTicket(TicketDTO ticketDTO) {

@@ -118,7 +118,7 @@ public class AuthAPI extends BaseAPI {
         user.ifPresent(u -> {
             userRepository.deleteById(id);
         });
-        return ObjectResponseWrapper.builder().data(null).statusCode(200).build();
+        return ObjectResponseWrapper.builder().data("delete").statusCode(200).build();
     }
 
 

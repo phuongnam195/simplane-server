@@ -111,7 +111,7 @@ public class FlightAPI extends BaseAPI {
         flightRepository.deleteById(flight.getId());
         flightAttrRepository.deleteAllByFlightId(flight.getId());
         flightAdjustmentRepository.deleteAllByFlightId(flight.getId());
-        return ObjectResponseWrapper.builder().data(null).statusCode(200).build();
+        return ObjectResponseWrapper.builder().data("delete").statusCode(200).build();
     }
 
     public void validateCreateFlight(FlightModel flightModel) {
