@@ -34,6 +34,7 @@ public class StaffAPI extends BaseAPI {
         if (!username.isBlankOrNull()) {
             parameterSearchUser.setUsername(username);
         }
+        parameterSearchUser.setIsSearchStaff(true);
         ListWrapper<StaffDTO> listWrapper = userService.searchStaffs(parameterSearchUser);
         return listWrapper;
     }

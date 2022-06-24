@@ -34,6 +34,9 @@ public class IUserRepositoryCustomImpl extends BaseRepositoryCustom implements I
         if (!parameterSearchUser.getUsername().isBlankOrNull()) {
             criteria.add(Criteria.where("username").is(parameterSearchUser.getUsername().trim()));
         }
+        if (parameterSearchUser.getIsSearchStaff() != null && parameterSearchUser.getIsSearchStaff().equals(true)) {
+            criteria.add(Criteria.where("isAdmin").is(false));
+        }
         if (userIds != null) {
             criteria.add(Criteria.where("_id").in(userIds));
         }

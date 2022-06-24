@@ -19,4 +19,5 @@ public class ParameterSearchUser {
     private String username;
     private Long startIndex;
     private Integer maxResult;
+    private Boolean isSearchStaff;
 }
