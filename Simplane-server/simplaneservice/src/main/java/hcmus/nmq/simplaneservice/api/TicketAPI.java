@@ -9,6 +9,7 @@ import hcmus.nmq.model.profile.FlightProfile;
 import hcmus.nmq.model.search.ParameterSearchFlight;
 import hcmus.nmq.model.search.ParameterSearchTicket;
 import hcmus.nmq.model.wrapper.ListWrapper;
+import hcmus.nmq.model.wrapper.ObjectResponseWrapper;
 import hcmus.nmq.simplaneservice.annotations.swagger.RequiredHeaderToken;
 import hcmus.nmq.simplaneservice.handler.SimplaneServiceException;
 import hcmus.nmq.utils.Constants;
@@ -61,8 +62,8 @@ public class TicketAPI extends BaseAPI {
     @Operation(summary = "Lấy danh sách vé máy bay")
     @GetMapping()
     public ListWrapper<TicketDTO> getListTicket(@RequestParam(value = "id", required = false) String id,
-                                                @RequestParam(value = "fromDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'") Date fromDate,
-                                                @RequestParam(value = "toDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'") Date toDate,
+                                                @RequestParam(value = "fromDate", required = false) @DateTimeFormat(pattern = Constants.DATE_TIME_FORMAT) Date fromDate,
+                                                @RequestParam(value = "toDate", required = false) @DateTimeFormat(pattern = Constants.DATE_TIME_FORMAT) Date toDate,
                                                 @RequestParam(value = "flightCode", required = false) String flightCode,
                                                 @RequestParam(value = "currentPage", required = false) @Min(value = 1, message = "currentPage phải lớn hơn 0") @Parameter(description = "Default: 1") Integer currentPage,
                                                 @RequestParam(value = "maxResult", required = false) @Min(value = 1, message = "maxResult phải lớn hơn 0") @Max(value = 50, message = "maxResult phải bé hơn 50") @Parameter(description = "Default: 50; Size range: 1-50") Integer maxResult) {
@@ -98,12 +99,13 @@ public class TicketAPI extends BaseAPI {
     @RequiredHeaderToken
     @Operation(summary = "Xóa vé máy bay")
     @DeleteMapping("/{id}")
-    public void deleteTicket(@PathVariable(value = "id", required = true) String id) {
+    public ObjectResponseWrapper deleteTicket(@PathVariable(value = "id", required = true) String id) {
         Optional<Ticket> ticket = ticketRepository.findById(id);
         if (!ticket.isPresent()) {
             throw new SimplaneServiceException("Không tồn tại vé có id: " + id + "!");
         }
         ticketService.deleteTicket(id);
+        return ObjectResponseWrapper.builder().data(null).statusCode(200).build();
     }
 
     private void validateCreateTicket(TicketDTO ticketDTO) {

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.security.PermitAll;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * 2:12 PM 4/17/2022
@@ -93,7 +94,7 @@ public class AuthAPI extends BaseAPI {
     }
 
     @RequiredHeaderToken
-    @PutMapping(value = "update-user")
+    @PutMapping(value = "/update-user")
     public UserDTO updateAccount(@RequestBody UserDTO userUpdate) {
         isAdmin();
         User user = validateUpdateUser(userUpdate);
@@ -105,6 +106,19 @@ public class AuthAPI extends BaseAPI {
         user.setVerified(userUpdate.getIsVerified());
         userRepository.save(user);
         return userUpdate;
+    }
+
+    @RequiredHeaderToken
+    @DeleteMapping(value = "/{id}")
+    public ObjectResponseWrapper deleteUser(@PathVariable("id") String id) {
+        Optional<User> user = userRepository.findById(id);
+        if (!user.isPresent()) {
+            throw new SimplaneServiceException("Không tồn tại người dùng! Vui lòng kiểm tra lại!");
+        }
+        user.ifPresent(u -> {
+            userRepository.deleteById(id);
+        });
+        return ObjectResponseWrapper.builder().data(null).statusCode(200).build();
     }
 
 

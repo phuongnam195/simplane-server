@@ -9,6 +9,7 @@ import hcmus.nmq.model.dtos.input.FlightModel;
 import hcmus.nmq.model.profile.FlightProfile;
 import hcmus.nmq.model.search.ParameterSearchFlight;
 import hcmus.nmq.model.wrapper.ListWrapper;
+import hcmus.nmq.model.wrapper.ObjectResponseWrapper;
 import hcmus.nmq.simplaneservice.annotations.swagger.RequiredHeaderToken;
 import hcmus.nmq.simplaneservice.converter.FlightConverter;
 import hcmus.nmq.simplaneservice.handler.SimplaneServiceException;
@@ -107,7 +108,7 @@ public class FlightAPI extends BaseAPI {
     @RequiredHeaderToken
     @Operation(summary = "Xóa chuyến bay ")
     @DeleteMapping("/{id}")
-    public void deleteFlight(@PathVariable("id") String id) {
+    public ObjectResponseWrapper deleteFlight(@PathVariable("id") String id) {
         FlightProfile flight = flightService.getFlightProfileById(id);
         if (flight == null) {
             throw new SimplaneServiceException("Không tồn tại chuyến bay với id: " + id + "! Vui lòng kiểm tra lại!");
@@ -115,6 +116,7 @@ public class FlightAPI extends BaseAPI {
         flightRepository.deleteById(flight.getId());
         flightAttrRepository.deleteAllByFlightId(flight.getId());
         flightAdjustmentRepository.deleteAllByFlightId(flight.getId());
+        return ObjectResponseWrapper.builder().data(null).statusCode(200).build();
     }
 
     public void validateCreateFlight(FlightModel flightModel) {

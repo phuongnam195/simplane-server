@@ -1,6 +1,7 @@
 package hcmus.nmq.model.dtos;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import hcmus.nmq.utils.Constants;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,13 +22,13 @@ public class TicketDTO {
     private String id;
     private String flightCode;
     //    @JsonFormat(pattern = "yyyy-MM-ddTHH:mm:ss.mmmuuuZ")
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.mmmuuu'Z'")
+    @JsonFormat(pattern = Constants.DATE_TIME_FORMAT)
     private Date flightDate;
     private PassengerDTO passenger;
     private String ticketClassId;
     private Double price;
     //    @JsonFormat(pattern = "yyyy-MM-ddTHH:mm:ss.mmmuuuZ")
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.mmmuuu'Z'")
+    @JsonFormat(pattern = Constants.DATE_TIME_FORMAT)
     private Date bookedTime;
     private String idUser;
 }
