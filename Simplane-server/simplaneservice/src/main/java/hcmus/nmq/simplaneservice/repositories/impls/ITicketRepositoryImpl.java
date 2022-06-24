@@ -33,10 +33,10 @@ public class ITicketRepositoryImpl extends BaseRepositoryCustom implements ITick
             ticketIds = ticketIds.merge(Collections.singleton(parameterSearchTicket.getId()));
         }
         if (null != parameterSearchTicket.getFromDate()) {
-            criteria.add(Criteria.where("bookedTime").gte(parameterSearchTicket.getFromDate()));
+            criteria.add(Criteria.where("flightDate").gte(parameterSearchTicket.getFromDate()));
         }
         if (null != parameterSearchTicket.getToDate()) {
-            criteria.add(Criteria.where("bookedTime").lte(parameterSearchTicket.getToDate()));
+            criteria.add(Criteria.where("flightDate").lte(parameterSearchTicket.getToDate()));
         }
         if (!parameterSearchTicket.getFlightCode().isBlankOrNull()) {
             criteria.add(Criteria.where("code").is(parameterSearchTicket.getFlightCode().trim()));
