@@ -42,10 +42,10 @@ public class TicketService extends BaseService implements ITicketService {
         ticket.setIdPassenger(idPassenger);
         Ticket ticketNew = ticketRepository.save(ticket);
         Flight flight = flightRepository.findByCode(ticket.getCode());
-        Map<String, FlightAttribute> mapSeat = flightAttrService.getMapTypeAttrByFlightId(flight.getId(), EnumConst.TypeAttrFlight.SEAT.toString());
-        FlightAttribute seatAttr = mapSeat.get(ticket.getIdTicketClass());
-        seatAttr.setAmount(seatAttr.getAmount() - 1);
-        flightAttrRepository.save(seatAttr);
+//        Map<String, FlightAttribute> mapSeat = flightAttrService.getMapTypeAttrByFlightId(flight.getId(), EnumConst.TypeAttrFlight.SEAT.toString());
+//        FlightAttribute seatAttr = mapSeat.get(ticket.getIdTicketClass());
+//        seatAttr.setAmount(seatAttr.getAmount() - 1);
+//        flightAttrRepository.save(seatAttr);
         Map<String, FlightAttribute> mapBook = flightAttrService.getMapTypeAttrByFlightId(flight.getId(), EnumConst.TypeAttrFlight.BOOK.toString());
         FlightAttribute bookAttr = mapBook.get(ticket.getIdTicketClass());
         bookAttr.setAmount(bookAttr.getAmount() + 1);
@@ -76,10 +76,10 @@ public class TicketService extends BaseService implements ITicketService {
             String idFlight = t.getCode();
             Optional<Flight> flight = flightRepository.findById(idFlight);
             flight.ifPresent(f -> {
-                FlightAttribute flightAttributeSeat = flightAttrRepository
-                        .findByTypeAndIdTicketClassAndFlightId(EnumConst.TypeAttrFlight.SEAT.toString(), idTicketClass, f.getId());
-                flightAttributeSeat.setAmount(flightAttributeSeat.getAmount() + 1);
-                flightAttrRepository.save(flightAttributeSeat);
+//                FlightAttribute flightAttributeSeat = flightAttrRepository
+//                        .findByTypeAndIdTicketClassAndFlightId(EnumConst.TypeAttrFlight.SEAT.toString(), idTicketClass, f.getId());
+//                flightAttributeSeat.setAmount(flightAttributeSeat.getAmount() + 1);
+//                flightAttrRepository.save(flightAttributeSeat);
                 FlightAttribute flightAttributeBook = flightAttrRepository
                         .findByTypeAndIdTicketClassAndFlightId(EnumConst.TypeAttrFlight.BOOK.toString(), idTicketClass, f.getId());
                 flightAttributeBook.setAmount(flightAttributeBook.getAmount() + 1);
