@@ -14,6 +14,7 @@ import lombok.experimental.ExtensionMethod;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 11:35 AM 5/28/2022
@@ -33,6 +34,16 @@ public class AirportAPI extends BaseAPI {
             throw new SimplaneServiceException("Không tồn tại sân bay!");
         }
         return airport;
+    }
+
+    @Operation(summary = "Chi tiết sân bay bằng id")
+    @GetMapping(value = "/{id}")
+    public Airport getAirportById(@PathVariable(value = "id") String id) {
+        Optional<Airport> airport = airportRepository.findById(id);
+        if (!airport.isPresent()) {
+            throw new SimplaneServiceException("Không tồn tại sân bay!");
+        }
+        return airport.get();
     }
 
     @Operation(summary = "Danh sách sân bay")
