@@ -42,6 +42,6 @@ public class RuleAPI extends BaseAPI{
     @GetMapping
     public Rule getRules() {
         List<Rule> rules = ruleRepository.findAll();
-        return rules.get(0);
+        return rules.get(rules.size() - 1);
     }
 }
