@@ -34,7 +34,11 @@ public abstract class BaseAPI {
     @Autowired
     private RestTemplate restTemplate;
 
+
     //repository
+    @Autowired
+    protected IRuleRepository ruleRepository;
+
     @Autowired
     protected IUserRepository userRepository;
 

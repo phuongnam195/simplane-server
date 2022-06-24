@@ -17,6 +17,7 @@ public class Constants {
     public static final String AIRPORT_SERVICE_URL = "/air-port";
     public static final String TICKET_SERVICE_URL = "/ticket";
     public static final String TICKET_CLASS_SERVICE_URL = "/ticket-class";
+    public static final String RULE_SERVICE_URL = "/rule";
 
 
     public static final String DATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.mmm";
