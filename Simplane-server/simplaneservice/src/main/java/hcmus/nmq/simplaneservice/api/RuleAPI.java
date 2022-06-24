@@ -40,10 +40,8 @@ public class RuleAPI extends BaseAPI{
 
     @Operation(summary = "Danh sách rule")
     @GetMapping
-    public ResponseWrapper<Rule> getRules() {
+    public Rule getRules() {
         List<Rule> rules = ruleRepository.findAll();
-        return ResponseWrapper.<Rule>builder()
-                .data(rules.get(0))
-                .build();
+        return rules.get(0);
     }
 }
