@@ -62,11 +62,28 @@ public class AirportAPI extends BaseAPI {
     public AirportDTO createAirport(@RequestBody AirportDTO airport) {
         validateCreate(airport);
         isAdmin();
-        String id = airportService.saveAirport(airport);
-        AirportDTO airportDTO = AirportDTO.builder()
-                .name(airport.getName())
-                .address(airport.getAddress())
-                .code(airport.getCode()).build();
+        Optional<Airport> airportDB = null;
+        if (!airport.getId().isBlankOrNull()) {
+            airportDB = airportRepository.findById(airport.getId());
+        }
+        AirportDTO airportDTO = null;
+        if (airportDB.isPresent()) {
+            String id = airportService.saveAirport(airport);
+            airportDTO = AirportDTO.builder()
+                    .id(airport.getId())
+                    .name(airport.getName())
+                    .address(airport.getAddress())
+                    .code(airport.getCode()).build();
+        } else {
+            String id = sequenceNumberRepository.getSequence(Airport.class);
+            airport.setId(id);
+            airportService.saveAirport(airport);
+            airportDTO = AirportDTO.builder()
+                    .id(airport.getId())
+                    .name(airport.getName())
+                    .address(airport.getAddress())
+                    .code(airport.getCode()).build();
+        }
         return airportDTO;
     }
 
@@ -89,10 +106,6 @@ public class AirportAPI extends BaseAPI {
         }
         if (airport.getName().isBlankOrNull()) {
             throw new SimplaneServiceException("Tên không được để trống!");
-        }
-        Airport airportCheck = airportRepository.findByCode(airport.getCode());
-        if (airportCheck != null) {
-            throw new SimplaneServiceException("Sân bay đã tồn tại mời kiểm tra lại!");
         }
     }
 }

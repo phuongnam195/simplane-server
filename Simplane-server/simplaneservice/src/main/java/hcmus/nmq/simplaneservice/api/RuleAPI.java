@@ -5,6 +5,8 @@ import hcmus.nmq.entities.Rule;
 import hcmus.nmq.model.dtos.AirportDTO;
 import hcmus.nmq.model.wrapper.ListResponseWrapper;
 import hcmus.nmq.model.wrapper.ListWrapper;
+import hcmus.nmq.model.wrapper.ObjectResponseWrapper;
+import hcmus.nmq.model.wrapper.ResponseWrapper;
 import hcmus.nmq.simplaneservice.annotations.swagger.RequiredHeaderToken;
 import hcmus.nmq.utils.Constants;
 import hcmus.nmq.utils.Extensions;
@@ -38,11 +40,10 @@ public class RuleAPI extends BaseAPI{
 
     @Operation(summary = "Danh sách rule")
     @GetMapping
-    public ListWrapper<Rule> getRules() {
-        isAdmin();
+    public ResponseWrapper<Rule> getRules() {
         List<Rule> rules = ruleRepository.findAll();
-        return ListWrapper.<Rule>builder()
-                .data(rules)
+        return ResponseWrapper.<Rule>builder()
+                .data(rules.get(0))
                 .build();
     }
 }

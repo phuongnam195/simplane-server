@@ -19,7 +19,10 @@ public class AirportService extends BaseService implements IAirportService {
 
     @Override
     public String saveAirport(AirportDTO airportDTO) {
-        String id = sequenceNumberRepository.getSequence(Airport.class);
+        String id = airportDTO.getId();
+        if (airportDTO.getId().isBlankOrNull()) {
+            id = sequenceNumberRepository.getSequence(Airport.class);
+        }
         Airport airport = Airport.builder()
                 .id(id)
                 .name(airportDTO.getName())

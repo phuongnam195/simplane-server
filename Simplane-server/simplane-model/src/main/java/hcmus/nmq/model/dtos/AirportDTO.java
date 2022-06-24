@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AirportDTO {
+    private String id;
     private String code;
     private String name;
     private String address;
